@@ -1,8 +1,7 @@
 package andremartds.library.api.dto;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
