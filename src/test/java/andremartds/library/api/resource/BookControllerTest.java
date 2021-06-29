@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.Matchers.hasSize;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
@@ -66,8 +67,18 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("Deve lançar um erro de validação ao não ter os dados corretos de um livro")
-    public void createInvalidBookTest() {
+    public void createInvalidBookTest() throws Exception {
+        var json = new ObjectMapper().writeValueAsString(new BookDTO());
 
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(BOOk_API)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", hasSize(3)));
     }
    
 }
