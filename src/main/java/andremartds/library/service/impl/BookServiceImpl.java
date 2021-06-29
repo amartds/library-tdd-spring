@@ -3,7 +3,6 @@ package andremartds.library.service.impl;
 import andremartds.library.model.entity.Book;
 import andremartds.library.model.entity.repository.BookRepository;
 import andremartds.library.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
