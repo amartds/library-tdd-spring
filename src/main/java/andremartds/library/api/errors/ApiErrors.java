@@ -1,9 +1,10 @@
 package andremartds.library.api.errors;
 
+import andremartds.library.api.exceptions.BusinessException;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ApiErrors {
@@ -13,6 +14,10 @@ public class ApiErrors {
     public ApiErrors(BindingResult bindresult) {
         this.errors = new ArrayList<>();
         bindresult.getAllErrors().forEach(result -> this.errors.add(result.getDefaultMessage()));
+    }
+
+    public ApiErrors(BusinessException ex) {
+        this.errors = Collections.singletonList(ex.getMessage());
     }
 
     public List<String> getErrors() {
