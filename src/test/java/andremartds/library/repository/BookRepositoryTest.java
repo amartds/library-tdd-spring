@@ -37,6 +37,19 @@ public class BookRepositoryTest {
         //test
         assertThat(exist).isTrue();
     }
+
+    @Test
+    @DisplayName("deve retornar falso quando nao existir um livro na base de dados")
+    public void returnTrueWhenIsbnNotExists() {
+        //cenario
+        String isbn = "123";
+
+        //execucao
+        boolean exist = repository.existsByIsbn(isbn);
+
+        //test
+        assertThat(exist).isFalse();
+    }
     private Book createNewBook() {
         return Book.builder().autor("André Martins").title("Meu livro").isbn("123").build();
     }
