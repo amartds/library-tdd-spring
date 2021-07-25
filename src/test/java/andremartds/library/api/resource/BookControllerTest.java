@@ -44,8 +44,8 @@ public class BookControllerTest {
    @DisplayName("Deve criar um livro com sucesso")
    public void createBookTest() throws Exception {
 
-       BookDTO dto = createNewBook();
-       Book savedBook = Book.builder().id(12L).autor("André Martins").title("Meu livro").isbn("123123").build(); // recebendo os dados fake no book
+       BookDTO dto = BookDTO.builder().autor("André Martins").title("Meu livro").isbn("aaa").build();
+       Book savedBook = Book.builder().id(12L).autor("André Martins").title("Meu livro").isbn("aaa").build(); // recebendo os dados fake no book
 
        BDDMockito.given(service.save(Mockito.any(Book.class))).willReturn(savedBook);
        
@@ -82,15 +82,14 @@ public class BookControllerTest {
                 .andExpect(jsonPath("errors", hasSize(3)));
     }
 
-    // ############### validação de regra de negocio  ##################
+    // ############### validação de regra de negócio  ##################
     @Test
     @DisplayName("Deve lançar um erro ao tentar cadastrar um isbn com outro igual existente")
     public void createValidDuplicatedIsbn() throws Exception {
 
-        BookDTO dto = createNewBook();
+        BookDTO dto = BookDTO.builder().autor("André Martins").title("Meu livro").isbn("bbb").build();
 
         BDDMockito.given(service.save(Mockito.any(Book.class))).willThrow(new BusinessException("isbn ja existe"));
-
         String json = new ObjectMapper().writeValueAsString(dto); // converte um json em string
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders  // batendo na api
